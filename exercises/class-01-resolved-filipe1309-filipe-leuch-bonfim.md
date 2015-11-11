@@ -2,7 +2,6 @@
 autor: Filipe Leuch Bonfim
 
 ## Importando os restaurantes
-
 ```
 mongoimport --db be-mean --collection restaurantes --drop --file restaurantes.json
 2015-11-09T22:33:05.854-0200	connected to: localhost
@@ -11,7 +10,6 @@ mongoimport --db be-mean --collection restaurantes --drop --file restaurantes.js
 ```
 
 ## Contando os restaurantes
-
 ```
 nz-fedora(mongod-3.0.7) test> use be-mean
 switched to db be-mean
