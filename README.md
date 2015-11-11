@@ -10,7 +10,6 @@ Repositório criado para armazenar os exercicios do módulo de Mongodb do [Works
  - [Descrição do exercício](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/mongodb/export_import.md)
  - [Resolução do exercício](https://github.com/filipe1309/be-mean-modulo-mongodb/blob/master/exercises/class-01-resolved-filipe1309-filipe-leuch-bonfim.md)
 
-
 #### Resumo:
 	Nesta aula foi apresentado uma visão geral do Workshop de BE MEAN - Instagram.
 	Um pouco de teria sobre bancos de dados NoSQL (analogia das cervejas =)).
@@ -32,8 +31,7 @@ Repositório criado para armazenar os exercicios do módulo de Mongodb do [Works
 	- Terminologia
 	- ...
 	
-	Por fim, foram passada alguns comandos básicos e configuraçõẽs especificas do mongoDB, além de uma API chamada Mongo Hacker.
-
+	Por fim, foram passada alguns comandos básicos(mongoimport/export) e configuraçõẽs especificas do mongoDB, além de uma API chamada Mongo Hacker.
 
 	
 ### Aula 02
@@ -44,10 +42,23 @@ Repositório criado para armazenar os exercicios do módulo de Mongodb do [Works
  - [Descrição do exercício](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/classes/mongodb/class-02-resolved.md)
  - [Resolução do exercício](https://github.com/filipe1309/be-mean-modulo-mongodb/blob/master/exercises/class-02-resolved-filipe1309-filipe-leuch-bonfim.md)
 
+#### Resumo:
+	Nesta aula foram vistos diversos comandos do mongoDb.
+```
+use db ('cria' ou muda para um db existente)
+show dbs (banco não é criado até a 1ª inserção)
+insert (1ª inserção + demorada, pois pré aloca espaço no HD)
+show collections
+createCollection (para criar coleção vazia)
+find() (retorna cursor)
+save() (insere e salva)
+findOne() (retorna objeto)
+iterar um cursor: while( cur.hasNext()) {cur.next()}
+```		
 
 
 ### Links importantes:
-- MongoDB
+- MongoDb
  - [Mongo Hacker](https://github.com/TylerBrock/mongo-hacker)
  - [Chat MongoDB - Rocket](http://be-mean.rocket.chat/channel/mongodb)
  - [Dagora - BE MEAN](http://dagora.net/be-mean/)
