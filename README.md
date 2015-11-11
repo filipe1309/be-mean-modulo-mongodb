@@ -5,8 +5,9 @@ Repositório criado para armazenar os exercicios do módulo de Mongodb do [Works
 - [Aula 01 - Export e Import](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/mongodb/export_import.md)
 
  - [Slides](https://docs.google.com/presentation/d/1KXxmcwd47x4v2SymyiBPK7ucn80PruSvcw4mZ5S3nWc/edit?pli=1#slide=id.p)
- - [Descrição do exercício](./mongodb-aula-01-exercicio.md)
- - [Resolução do exercício](./mongodb-aula-01-exercicio.md)
+ - [Vídeo](https://www.youtube.com/watch?v=leYxsEAL_yY)
+ - [Descrição do exercício](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/mongodb/export_import.md)
+ - [Resolução do exercício](https://github.com/filipe1309/be-mean-modulo-mongodb/blob/master/exercises/class-01-resolved-filipe1309-filipe-leuch-bonfim.md)
 
 
 #### Resumo:
@@ -35,11 +36,12 @@ Repositório criado para armazenar os exercicios do módulo de Mongodb do [Works
 
 	
 
-- [Aula 02 - ](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/mongodb/  https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/classes/mongodb/class-02-resolved.md)
+- [Aula 02 - ](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/classes/mongodb/class-02-resolved.md)
  
  - [Slides](https://docs.google.com/presentation/d/1KXxmcwd47x4v2SymyiBPK7ucn80PruSvcw4mZ5S3nWc/edit?pli=1#slide=id.p)
- - [Descrição do exercício]()
- - [Resolução do exercício]()
+ - [Vídeo](https://www.youtube.com/watch?v=PaNVk0V2UNI)
+ - [Descrição do exercício](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/classes/mongodb/class-02-resolved.md)
+ - [Resolução do exercício](https://github.com/filipe1309/be-mean-modulo-mongodb/blob/master/exercises/class-02-resolved-filipe1309-filipe-leuch-bonfim.md)
 
 
 
