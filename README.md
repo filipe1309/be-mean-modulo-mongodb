@@ -7,6 +7,8 @@ Repositório criado para armazenar os exercicios do módulo de Mongodb do [Works
  - [Slides](https://docs.google.com/presentation/d/1KXxmcwd47x4v2SymyiBPK7ucn80PruSvcw4mZ5S3nWc/edit?pli=1#slide=id.p)
  - [Descrição do exercício](./mongodb-aula-01-exercicio.md)
  - [Resolução do exercício](./mongodb-aula-01-exercicio.md)
+
+
 #### Resumo:
 	Nesta aula foi apresentado uma visão geral do Workshop de BE MEAN - Instagram.
 	Um pouco de teria sobre bancos de dados NoSQL (analogia das cervejas =)).
@@ -29,9 +31,6 @@ Repositório criado para armazenar os exercicios do módulo de Mongodb do [Works
 	- ...
 	
 	Por fim, foram passada alguns comandos básicos e configuraçõẽs especificas do mongoDB, além de uma API chamada Mongo Hacker.
-
-
-
 
 
 	
