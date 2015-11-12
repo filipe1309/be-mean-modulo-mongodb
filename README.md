@@ -54,7 +54,7 @@ find() (retorna cursor)
 save() (insere e salva)
 findOne() (retorna objeto)
 iterar um cursor: while( cur.hasNext()) {cur.next()}
-```		
+```
 
 
 ### Aula 03
@@ -116,6 +116,7 @@ Sintaxe das buscas
  - [EAD - Dagora](http://aprenda.dagora.net/login/)
  - [Facebook - Webschool.io - Workshop Be MEAN](https://www.facebook.com/groups/workshop.be.mean/)
  - [Material de estudos - Pré-requisito](http://aprenda.dagora.net/discussao/1/1/material-de-estudos-como-pre-requisitos/)
+ - [Repositório de exercícios](https://github.com/Webschool-io/be-mean-instagram-mongodb-excercises)
  - [Wiki](https://github.com/Webschool-io/be-mean-instagram/wiki)
 
 
