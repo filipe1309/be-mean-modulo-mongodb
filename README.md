@@ -57,6 +57,51 @@ iterar um cursor: while( cur.hasNext()) {cur.next()}
 ```		
 
 
+### Aula 03
+- [find-findOne](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/mongodb/find-findOne.md)
+ 
+ - [Slides](https://docs.google.com/presentation/d/1KXxmcwd47x4v2SymyiBPK7ucn80PruSvcw4mZ5S3nWc/edit?pli=1#slide=id.p)
+ - [Vídeo](https://www.youtube.com/watch?v=cIHjA1hyPPY&feature=youtu.be)
+ - [Descrição do exercício](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/classes/mongodb/class-02-resolved.md)
+ - [Resolução do exercício](https://github.com/filipe1309/be-mean-modulo-mongodb/blob/master/exercises/class-03-resolved-filipe1309-filipe-leuch-bonfim.md)
+
+#### Resumo:
+	Nesta aula foram vistos diversos comandos do mongoDb.
+```
+_id (UUID, 4b - timestamp do Unix, 3b - ex: mac, 2b - PID, 3b - contador(hex) random)
+
+Sintaxe das buscas
+	find({clausulas}, {campos}) => clasulas = WHERE, campos = SELECT
+	Query
+		var query = {campo: valor} = JSON (WHERE do relacional)
+		...find(query)
+	Fields
+		Basta apenas informar os campos a serem retornados na busca
+		0 = FALSE,
+		1 = TRUE	
+		var fields = {campo: boolean(0/1), ...} = JSON (SELECT do relacional)
+		Campo _id sempre retorna, para eliminar o _id na busca:
+			{..., _id: 0}
+	Busca + complexas:
+	Operadores aritméticos -> {campo: {OA: valor}}
+		<  -> $lt
+		<= -> $lte
+		>  -> $gt
+		>= -> $gte
+
+	Operadores lógicos -> {OL: [{COND1}, {COND2}]}
+		OR -> $or
+		NOR (Not OR) -> $nor
+		E -> $and
+
+	Operadores existenciais -> {campo: {OE: boolean(true/false)}}
+		$exists (ex nuvem de tags)
+		
+		
+
+```
+
+
 ### Links importantes:
 - MongoDb
  - [Mongo Hacker](https://github.com/TylerBrock/mongo-hacker)
