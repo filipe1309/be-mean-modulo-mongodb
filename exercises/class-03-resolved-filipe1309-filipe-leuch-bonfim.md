@@ -62,7 +62,7 @@ Fetched 4 record(s) in 0ms
 
 ## Liste todos Pokemons com a altura **menor ou igual que** 0.5 **E** do tipo grama
 ```
-nz-fedora(mongod-3.0.7) be-mean-pokemons> var query = {$and : [{height: {$lte: 0.5 }}, {type: 'grama'}]}
+nz-fedora(mongod-3.0.7) be-mean-pokemons> var query = {$and : [{height: {$lte: 0.5 }}, {type: /grama/i}]}
 nz-fedora(mongod-3.0.7) be-mean-pokemons> db.pokemons.find(query)
 Fetched 0 record(s) in 0ms
 ```
