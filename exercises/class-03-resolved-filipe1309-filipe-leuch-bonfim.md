@@ -1,7 +1,7 @@
 # MongoDB - Aula 03 - Exercício
 autor: Filipe Leuch Bonfim
 
-## Liste todos Pokemons com a altura menor que 0.5 (passo 1)
+## Liste todos Pokemons com a altura **menor que** 0.5;
 ```
 nz-fedora(mongod-3.0.7) be-mean-pokemons> var query = {height: {$lt: 0.5 }}
 nz-fedora(mongod-3.0.7) be-mean-pokemons> db.pokemons.find(query)
@@ -17,7 +17,7 @@ nz-fedora(mongod-3.0.7) be-mean-pokemons> db.pokemons.find(query)
 Fetched 1 record(s) in 0ms
 ```
 
-## Liste todos Pokemons com a altura maior ou igual que 0.5 (passo 2)
+## Liste todos Pokemons com a altura **maior ou igual que** 0.5
 ```
 nz-fedora(mongod-3.0.7) be-mean-pokemons> var query = {height: {$gte: 0.5 }}
 nz-fedora(mongod-3.0.7) be-mean-pokemons> db.pokemons.find(query)
@@ -60,24 +60,23 @@ nz-fedora(mongod-3.0.7) be-mean-pokemons> db.pokemons.find(query)
 Fetched 4 record(s) in 0ms
 ```
 
-## Liste todos Pokemons com a altura menor ou igual que 0.5 E do tipo grama (passo 3)
+## Liste todos Pokemons com a altura **menor ou igual que** 0.5 **E** do tipo grama
 ```
 nz-fedora(mongod-3.0.7) be-mean-pokemons> var query = {$and : [{height: {$lte: 0.5 }}, {type: 'grama'}]}
 nz-fedora(mongod-3.0.7) be-mean-pokemons> db.pokemons.find(query)
 Fetched 0 record(s) in 0ms
 ```
 
-## Liste todos Pokemons com o name `Pikachu` OU com attack menor ou igual que 0.5 (passo 4)
+## Liste todos Pokemons com o name `Pikachu` **OU** com attack **menor ou igual que** 0.5
 ```
 nz-fedora(mongod-3.0.7) be-mean-pokemons> var query = {$or : [{name: 'Pikachu'}, {attack: {$lte: 0.5 }}]}
 nz-fedora(mongod-3.0.7) be-mean-pokemons> db.pokemons.find(query)
 Fetched 0 record(s) in 0ms
 ```
 
-## Liste todos Pokemons com o attack MAIOR OU IGUAL QUE 48 E com  height menor ou igual que 0.5 (passo 5)
+## Liste todos Pokemons com o attack **MAIOR OU IGUAL QUE** 48 **E** com  height **menor ou igual que** 0.5
 ```
 nz-fedora(mongod-3.0.7) be-mean-pokemons> var query = {$and : [{attack: {$gte: 48 }}, {height: {$lte: 0.5}}]}
 nz-fedora(mongod-3.0.7) be-mean-pokemons> db.pokemons.find(query)
 Fetched 0 record(s) in 0ms
 ```
-
