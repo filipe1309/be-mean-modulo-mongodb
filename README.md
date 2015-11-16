@@ -13,7 +13,8 @@ Repositório criado para armazenar os exercicios do módulo de Mongodb do [Works
 #### Resumo:
 Nesta aula foi apresentado uma visão geral do Workshop de BE MEAN - Instagram.
 Um pouco de teria sobre bancos de dados NoSQL (analogia das cervejas =)).
-	Bancos Relacionais -> Respostas
+
+    Bancos Relacionais -> Respostas
 	Bancos NoSQL -> Perguntas
 	Princípais grupos NoSQL
 	- chave/valor
@@ -70,33 +71,34 @@ iterar um cursor: while( cur.hasNext()) {cur.next()}
 Nesta aula foram vistos diversos comandos do mongoDb.
 ```
 _id (UUID, 4b - timestamp do Unix, 3b - ex: mac, 2b - PID, 3b - contador(hex) random)
-
+```
 Sintaxe das buscas
-	find({clausulas}, {campos}) => clasulas = WHERE, campos = SELECT
-	Query
-		var query = {campo: valor} = JSON (WHERE do relacional)
-		...find(query)
-	Fields
-		Basta apenas informar os campos a serem retornados na busca
-		0 = FALSE,
-		1 = TRUE
-		var fields = {campo: boolean(0/1), ...} = JSON (SELECT do relacional)
-		Campo _id sempre retorna, para eliminar o _id na busca:
-			{..., _id: 0}
-	Busca + complexas:
-	Operadores aritméticos -> {campo: {OA: valor}}
-		<  -> $lt
-		<= -> $lte
-		>  -> $gt
-		>= -> $gte
+```
+find({clausulas}, {campos}) => clasulas = WHERE, campos = SELECT
+Query
+	var query = {campo: valor} = JSON (WHERE do relacional)
+	...find(query)
+Fields
+	Basta apenas informar os campos a serem retornados na busca
+	0 = FALSE,
+	1 = TRUE
+	var fields = {campo: boolean(0/1), ...} = JSON (SELECT do relacional)
+	Campo _id sempre retorna, para eliminar o _id na busca:
+		{..., _id: 0}
+Busca + complexas:
+Operadores aritméticos -> {campo: {OA: valor}}
+	<  -> $lt
+	<= -> $lte
+	>  -> $gt
+	>= -> $gte
 
-	Operadores lógicos -> {OL: [{COND1}, {COND2}]}
-		OR -> $or
-		NOR (Not OR) -> $nor
-		E -> $and
+Operadores lógicos -> {OL: [{COND1}, {COND2}]}
+	OR -> $or
+	NOR (Not OR) -> $nor
+	E -> $and
 
-	Operadores existenciais -> {campo: {OE: boolean(true/false)}}
-		$exists (ex nuvem de tags)
+Operadores existenciais -> {campo: {OE: boolean(true/false)}}
+	$exists (ex nuvem de tags)
 
 ```
 
