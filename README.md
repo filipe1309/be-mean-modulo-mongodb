@@ -102,23 +102,44 @@ Operadores existenciais -> {campo: {OE: boolean(true/false)}}
 
 ```
 
-### Aula 04
+### Aula 04 - Parte 1
 ####[Save, Update, Operadores de Arrays](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/module-mongodb/update.md)
 
  - [Slides](https://docs.google.com/presentation/d/1KXxmcwd47x4v2SymyiBPK7ucn80PruSvcw4mZ5S3nWc/edit?pli=1#slide=id.gd8825a620_4_118)
- - [Vídeo]()
- - [Descrição do exercício]()
- - [Resolução do exercício]()
+ - [Vídeo](https://www.youtube.com/watch?v=ONzJsNbv15U)
 
 #### Resumo:
 ```
 ```
 
+### Aula 04 - Parte 2
+####[Options, Operadores de array/negação](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/module-mongodb/find-findOne.md)
+
+ - [Slides](https://docs.google.com/presentation/d/1KXxmcwd47x4v2SymyiBPK7ucn80PruSvcw4mZ5S3nWc/edit?pli=1#slide=id.gd8825a620_4_118)
+ - [Vídeo](https://www.youtube.com/watch?v=ozbmQb6SVQk)
+ - [Descrição do exercício](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/classes/mongodb/class-04.md)
+ - [Resolução do exercício]()
+
+#### Resumo:
+```
+    Operadores de array
+    in = or
+    all = and
+
+    Operadores de negação
+    $ne = não aceita regex =/
+    $remove = remove o documento e não a coleção(neste caso seria drop()), é multi: true -> ele deixa vc fazer MERDA!!!!
+
+```
+
+
+
 ### Links importantes:
 - MongoDb
- - [Mongo Hacker](https://github.com/TylerBrock/mongo-hacker)
- - [Chat MongoDB - Rocket](http://be-mean.rocket.chat/channel/mongodb)
  - [Apostila MongoDB](https://github.com/Webschool-io/be-mean-instagram/tree/master/apostila/mongodb)
+ - [Chat MongoDB - Rocket](http://be-mean.rocket.chat/channel/mongodb)
+ - [E-book MongoDb - Guia rápido](http://mundointerativo.com/b/e-book-mongodb-guia-rapido-para-iniciantes/)
+ - [Mongo Hacker](https://github.com/TylerBrock/mongo-hacker)
 
 - Geral
  - [Chat Geral - Rocket](http://be-mean.rocket.chat/channel/general)
