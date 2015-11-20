@@ -400,6 +400,83 @@ db.pokemons.aggregate(
         }
     }
 ] )
+{
+  "result": [
+    {
+      "_id": "fairy",
+      "total": 28
+    },
+    {
+      "_id": "psychic",
+      "total": 62
+    },
+    {
+      "_id": "fighting",
+      "total": 38
+    },
+    {
+      "_id": "ice",
+      "total": 24
+    },
+    {
+      "_id": "fire",
+      "total": 47
+    },
+    {
+      "_id": "dark",
+      "total": 38
+    },
+    {
+      "_id": "ground",
+      "total": 51
+    },
+    {
+      "_id": "grass",
+      "total": 75
+    },
+    {
+      "_id": "electric",
+      "total": 40
+    },
+    {
+      "_id": "steel",
+      "total": 37
+    },
+    {
+      "_id": "ghost",
+      "total": 34
+    },
+    {
+      "_id": "dragon",
+      "total": 20
+    },
+    {
+      "_id": "water",
+      "total": 105
+    },
+    {
+      "_id": "poison",
+      "total": 54
+    },
+    {
+      "_id": "bug",
+      "total": 61
+    },
+    {
+      "_id": "rock",
+      "total": 46
+    },
+    {
+      "_id": "flying",
+      "total": 77
+    },
+    {
+      "_id": "normal",
+      "total": 78
+    }
+  ],
+  "ok": 1
+}
 ```
 
 ## 6. Realizar 3 counts na pokemons.
