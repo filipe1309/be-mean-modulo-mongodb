@@ -3,7 +3,7 @@
 Repositório criado para armazenar os exercicios do módulo de Mongodb do [Workshop de BE MEAN - Instagram](https://github.com/Webschool-io/be-mean-instagram), da [Webschool.io](https://github.com/Webschool-io)
 
 ### Aula 01
-####[Export e Import](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/mongodb/export_import.md)
+####[Export e Import](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/module-mongodb/export_import.md)
 
  - [Slides](https://docs.google.com/presentation/d/1KXxmcwd47x4v2SymyiBPK7ucn80PruSvcw4mZ5S3nWc/edit?pli=1#slide=id.p)
  - [Vídeo](https://www.youtube.com/watch?v=leYxsEAL_yY)
@@ -60,7 +60,7 @@ iterar um cursor: while( cur.hasNext()) {cur.next()}
 
 
 ### Aula 03
-####[find,findOne, Operadores de Aritmética/Lógicos/Existênciais/Negação](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/mongodb/find-findOne.md)
+####[find,findOne, Operadores de Aritmética/Lógicos/Existênciais/Negação](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/module-mongodb/find-findOne.md)
 
  - [Slides](https://docs.google.com/presentation/d/1KXxmcwd47x4v2SymyiBPK7ucn80PruSvcw4mZ5S3nWc/edit?pli=1#slide=id.p)
  - [Vídeo](https://www.youtube.com/watch?v=cIHjA1hyPPY&feature=youtu.be)
@@ -224,9 +224,9 @@ aggregate([
 ```
 
 ### Aula 06 - Parte 1
-####[](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/module-mongodb/find-findOne.md)
+####[Relacionamentos](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/module-mongodb/relations.md)
 
- - [Slides]https://docs.google.com/presentation/d/1KXxmcwd47x4v2SymyiBPK7ucn80PruSvcw4mZ5S3nWc/edit?pli=1#slide=id.ge8eaeb64b_110_8)
+ - [Slides](https://docs.google.com/presentation/d/1KXxmcwd47x4v2SymyiBPK7ucn80PruSvcw4mZ5S3nWc/edit?pli=1#slide=id.ge8eaeb64b_110_8)
  - [Vídeo](https://www.youtube.com/watch?v=5bbWeEEzRQM)
 
 #### Resumo:
