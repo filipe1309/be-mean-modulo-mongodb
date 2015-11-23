@@ -164,6 +164,7 @@ db.collection.update(query, modifications, options)
         $ne = Not Equal
             {campo: {$ne: valor}}
             não aceita regex =/
+        $not = !
         $remove = remove o documento e não a coleção(neste caso seria drop()), é multi: true -> ele deixa vc fazer MERDA!!!!
 
 ```
@@ -222,6 +223,46 @@ aggregate([
 ])
 ```
 
+### Aula 06 - Parte 1
+####[](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/module-mongodb/find-findOne.md)
+
+ - [Slides]https://docs.google.com/presentation/d/1KXxmcwd47x4v2SymyiBPK7ucn80PruSvcw4mZ5S3nWc/edit?pli=1#slide=id.ge8eaeb64b_110_8)
+ - [Vídeo](https://www.youtube.com/watch?v=5bbWeEEzRQM)
+
+#### Resumo:
+```
+Relacionamentos entre collections
+**JOINS NO eCxistem!!!!!!!!!!!!!**
+ -> mas existem 2 formas:
+    Manual
+        salvando o _id de uma coleção em outra
+        var pokemons = [
+            {"_id": ObjectId("12321...")},
+            {"_id": ObjectId("22321...")},
+            {"_id": ObjectId("32321...")},
+        ];
+        var json = {
+            "name": "Meus pokemons",
+            pokemons: pokemons
+        }
+        db.inventario.insert(json)
+        var pokemons = []
+        var getPokemon = function(id){ pokemons.push(db.pokemons.findOne(id)) }
+        var inventario = db.inventario.findOne()
+        // inventario.pokemons = array de ids de pokemon
+        inventario.pokemons.forEach(getPokemon) // da um forEach no array de id de pokemons, executando o getPokemon para cada id
+
+    Dbref
+        Convenção para representar um documento relacionado
+        é interessante utilizar quando os documentos referenciados estão en outra db
+        $ref -> nome da coleção referenciada
+        $id -> ObjectId do documento referenciado
+        $db -> db da coleção referenciada
+
+    -> no mongoose utiliza-se o populate =)
+
+```
+
 
 
 
@@ -230,6 +271,7 @@ aggregate([
  - [Apostila MongoDB](https://github.com/Webschool-io/be-mean-instagram/tree/master/apostila/mongodb)
  - [Chat MongoDB - Rocket](http://be-mean.rocket.chat/channel/mongodb)
  - [E-book MongoDb - Guia rápido](http://mundointerativo.com/b/e-book-mongodb-guia-rapido-para-iniciantes/)
+ - [FAQ MongoDb](https://github.com/Webschool-io/be-mean-instagram-mongodb-FAQ)
  - [Mongo Hacker](https://github.com/TylerBrock/mongo-hacker)
 
 - Geral
