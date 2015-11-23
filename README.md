@@ -103,13 +103,26 @@ Operadores existenciais -> {campo: {OE: boolean(true/false)}}
 ```
 
 ### Aula 04 - Parte 1
-####[Save, Update, Operadores de Arrays](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/module-mongodb/update.md)
+####[Save, Update, Operadores de array](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/module-mongodb/update.md)
 
  - [Slides](https://docs.google.com/presentation/d/1KXxmcwd47x4v2SymyiBPK7ucn80PruSvcw4mZ5S3nWc/edit?pli=1#slide=id.gd8825a620_4_118)
  - [Vídeo](https://www.youtube.com/watch?v=ONzJsNbv15U)
 
 #### Resumo:
 ```
+db.collection.update(query, modifications, options)
+    Ao contrário do save(), não é necessário buscar o documento antes de poder modificá-lo
+
+    Operadores de modificação
+        {$set: { campo: valor }} -> modifica um valor ou cria se não existir
+        {$unset: { campo: 1 }} -> remove campos
+        {$inc: { campo: valor }} -> incrementa um valor no campo, se o campo não existir, irá criar e setar o valor
+
+Operadores de array
+    {$push: { campo: valor }} -> adiciona um valor ao campo do tipo array. Se o campo não existir irá criá-lo, e se o campo não for do tipo array, retornará erro
+    {$pushAll: { campo: [array de valores] }} -> adiciona cada valor do [array de valores] ao campo do tipo array. Se o campo não existir irá criá-lo, e se o campo não for do tipo array, retornará erro
+    {$pull: { campo: valor }} -> retira o valor do campo do tipo array. Se o campo não existir não faz nada, e se o campo não for do tipo array, retornará erro
+    {$pullAll: { campo: [array de valores] }} -> retira cada valor do [array de valores] do campo do tipo array. Se o campo não existir não faz nada, e se o campo não for do tipo array, retornará erro
 ```
 
 ### Aula 04 - Parte 2
@@ -118,19 +131,97 @@ Operadores existenciais -> {campo: {OE: boolean(true/false)}}
  - [Slides](https://docs.google.com/presentation/d/1KXxmcwd47x4v2SymyiBPK7ucn80PruSvcw4mZ5S3nWc/edit?pli=1#slide=id.gd8825a620_4_118)
  - [Vídeo](https://www.youtube.com/watch?v=ozbmQb6SVQk)
  - [Descrição do exercício](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/classes/mongodb/class-04.md)
- - [Resolução do exercício]()
+ - [Resolução do exercício](https://github.com/filipe1309/be-mean-modulo-mongodb/blob/master/exercises/class-04-resolved-filipe1309-filipe-leuch-bonfim.md)
 
 #### Resumo:
 ```
+db.collection.update(query, modifications, options)
+    options -> configura alguns valore diferentes do padrão para o update
+        {
+            upsert: boolean, // default: FALSE
+                Caso o documento não seja encontrado, insere o objeto passado como modificação
+            multi: boolean, // default: FALSE
+                atualizada todos os objetos da 'collection' com o que foi passado no campo 'modifications' 'modifications'
+            writeConcern: document
+                descreve a garantia, ou nível de garantia, de escrita do MongoDb. Fraco -> retorna rápido
+        }
+
+    Operadores de modificação
+        setOnInsert -> define valores que serão adicionados caso ocorra um upsert
+
+
+
     Operadores de array
     in = or
+        {campo: {$in: [array de valores]}}, retorna os docuemtnos que possuem algum dos valores do [array de valores]
+    $nin -> {campo: {$nin: [array de valores]}}
+        retorna documentos que não possuem os valores passados.
     all = and
+        {campo: {$all: [array de valores]}}
+        retorna os documentos que possuem todos os valores definidos.
 
     Operadores de negação
-    $ne = não aceita regex =/
-    $remove = remove o documento e não a coleção(neste caso seria drop()), é multi: true -> ele deixa vc fazer MERDA!!!!
+        $ne = Not Equal
+            {campo: {$ne: valor}}
+            não aceita regex =/
+        $remove = remove o documento e não a coleção(neste caso seria drop()), é multi: true -> ele deixa vc fazer MERDA!!!!
 
 ```
+
+### Aula 05
+####[Distinct, group, limit, skip, aggregate](x)
+
+ - [Slides](https://docs.google.com/presentation/d/1KXxmcwd47x4v2SymyiBPK7ucn80PruSvcw4mZ5S3nWc/edit?pli=1#slide=id.ge839fbc67_123_11)
+ - [Vídeo](https://www.youtube.com/watch?v=1eHc8reT_Vk)
+ - [Descrição do exercício](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/classes/mongodb/class-05.md)
+ - [Resolução do exercício](https://github.com/filipe1309/be-mean-modulo-mongodb/blob/master/exercises/class-05-resolved-filipe1309-filipe-leuch-bonfim.md)
+
+#### Resumo:
+```
+count() + rápido que o length()
+O count() aceita as mesma queries que o find(), update() ...
+
+distinct() == no SQL,
+    retorna array direto, e não um documento
+    podendo usar o lengh direto
+    aceita valor, nome de array
+
+sort().reverse()
+
+limit( valor_limit ).skip( valor_limit * num_págino ) == paginação
+
+/* Agrupa */
+db.collection.group({
+    initial: {total: 0} // variavel acumuladora
+    cond: {...}
+    reduce: function(curr, result) { // execuatdo para cada documento da collection, curr == documento atual
+    },
+    finalize: function(result) { // roda 1 vez no fim
+
+    }
+})
+
+/* Agrupa e efetua alguma operação,
+geralmente o que é possível fazer no group tbm é possivel no aggregate e vice-versa
+ */
+db.collection.aggregate({
+    $group: {
+        var: {$avg : '$campo'} // retorna a média da coluna/campo
+        // outras opções: $sum
+    }
+})
+
+/* aggregate com match(cond)
+== group + cond
+*/
+aggregate([
+    {$match: {campo: valor/expressão}},
+    {
+        $group: ...
+    }
+])
+```
+
 
 
 
