@@ -84,6 +84,11 @@ db.pokemons.find(query)
 }
 Fetched 1 record(s) in 0ms
 ```
+```
+Obs: Na resolução do exercício o Suissa resolveu com $in ao invés de $all, mas no enunciado
+foi utilizado o condicional **E** no seguinte trecho: "... possuam o ataque `investida` **E** mais um ...", por isso entendi que teria que ser usado o $all  
+```
+
 
 ## Pesquisar **todos** os pokemons que possuam os ataques que você adicionou, escolha seu pokemon favorito.##
 ```javascript
