@@ -410,8 +410,7 @@ Réplica
 ```
 
 Projeto final
-https://github.com/Webschool-io/be-mean-instagram/tree/master/apostila/module-mongodb/project
-
+[Relacional -> NoSQL](https://github.com/Webschool-io/be-mean-instagram-mongodb-projects)
 
 ### Links importantes:
 - MongoDb
