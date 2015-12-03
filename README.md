@@ -409,8 +409,280 @@ Réplica
 
 ```
 
+
+### Aula 07
+####[]()
+
+ - [Slides](https://docs.google.com/presentation/d/1KXxmcwd47x4v2SymyiBPK7ucn80PruSvcw4mZ5S3nWc/edit?pli=1#slide=id.gea0103700_69_22)
+ - [Vídeo](https://www.youtube.com/watch?v=1ElYrkSIvII)
+ - [Descrição do exercício]()
+
+ - [Resolução do exercício]()
+
+#### Resumo:
+```
+Réplicas (continuação ...)
+    Árbitro -> desempate, voto de minerva
+        serviço que não possui réplica, e não pode virar réplica primária
+        dica: colocar em uma máquina com pouco hd e memória, pois o árbitro não consome muitos recursos
+        - vota quando existe um empate na votação de uma nova réplica primária
+
+        Porque usar?
+            Para, quando a réplica primária for rebaixada, seja escolhida uma réplica secundária, evitando o empate.
+
+        Quando usar?
+            quando tem um um número par de réplicas
+
+        Como usar?
+            - Adicionar qunado existe um número par de membros (réplica primária e secundárias)
+            mkdir /data/arb/ && cd /data/arb/
+            mongod --port 30000 -dbpath /data/arb --replSet replica_set
+            - conectar na réplica primária e adicionar o árbitro com rs.addArb()
+            rs.addArb("127.0.0.1:30000")
+
+
+        Comunicação do árbitro com os outros membros
+            - votar durante eleições
+            - heartbeats (pings para avisar que está em execução)
+            - dados de configuração
+
+Sharding
+    é o processo de armazenamento de dados em várias máquinas, para o crescimento de dados
+    São adicionadas mais máquinas para suportar o crescimento de dados e o I/O.
+
+    Escalabilidade vertical
+        - mais recursos no mesmo servidor
+
+    Escalabilidade horizontal
+        - mais servidores
+        - sharding mondoDb
+
+    Porque usar?
+        Por causa da queda drástica de performance, devido a páginação de dados que ocorre quando a memória ram é excedida pelo MongoDB. (coleção > Memória RAM)
+
+    Quando usar?
+        A partir da verificação de que uma coleção do banco de dados está se apreximando do quantidade de memória RAM do servidor.
+
+    Como usar?
+        1º entendo a arquitetura do shard:
+            3 serviços:
+                - shards: onde ficam os dados
+                - config servers:
+                        servidores de configuração do cluster, instância do MongoDB com os metadados. Os metadados mapeiam os chunks (pedaços) de dados para os shards.
+                - routers:
+                    Instância de mongos, que roteia o I/O para os shards.
+                    Recebem as requisições, busca no shard correto e entrega a resposta
+
+            Criando um cluster:
+                Config Server:
+                    mkdir \data\configdb
+                    mongod --configsvr --port 27010
+
+                Router:
+                    mongos --configdb localhost:27010 --port 27011
+
+                Verifica conexões do mongos
+                    mongos
+                        db._adminCommand("connPoolStats");
+
+                Shards
+                    - criando as pastas
+                    mkdir /data/shard1 && mkdir /data/shard2 && mkdir /data/shard3
+                    - criar shards
+                    mongod --port 27012 --dbpath /data/shard1
+                    mongod --port 27013 --dbpath /data/shard2
+                    mongod --port 27014 --dbpath /data/shard3
+                    Registrando os shards no routes
+                    - conecata no router
+                    mongo --port 27011 --host localhost
+                    - registra os shards
+                    > sh.addShard("localhost:27012")
+                    {"shardAdded": "shard0000", "ok": 1}
+                    > sh.addShard("localhost:27013")
+                    {"shardAdded": "shard0001", "ok": 1}
+                    > sh.addShard("localhost:27014")
+                    {"shardAdded": "shard0002", "ok": 1}
+
+                    Especificar qual database irá shardear
+                    (no mongos) -> sh.enableSharding("db")
+                    sh.enableSharding("be-mean")
+
+                    Especificar qual coleção dessa database irá ser shardeada
+                    -> sh.shardCollection("db.coleção", shardKey), // shardKey = campo que será "quebrado"
+                    sh.shardCollection("be-mean.notas", {"_id": 1})
+
+                    inserindo dados (no mongos)
+                    for (i = 1; i < 100000; i++ ) {
+                        db.notas.insert({
+                            tipo: "prova",
+                            nota: Math.random() * 100,
+                            estudante_id: i,
+                            active: true,
+                            date_created: Date.now(),
+                            escola: "Webschool",
+                            pais: "Brasil",
+                            rg: i*3
+                        });
+                    }
+
+Comandos de gerenciamento de usuários
+    autenticação e autorização: coleção system.users do banco de dados admin
+    comandos:
+        createUser -> cria um novo usuário no db em que está, retorna erro se duplicado.
+            sintaxe:
+            db.runCommand (
+                {
+                    createUse: "nome",
+                    pwd "senha",
+                    customData: {},
+                    roles [
+                        {role: "role", db: "db"} | "role",
+                    ]
+                    digestPassword: boolean, // Opcional, TRUE o próprio mongodb cria um hash random com sha1
+                    writeConcern: {"wc"}
+                }
+            )
+
+            Acesso requerido
+                grantRole
+
+            Ex:
+                Craindo um adm:
+                use admin
+                db.createUser(
+                    {
+                        user: "FilipeAdmin",
+                        pwd: "admin123"
+                        roles: [
+                            { role: "userAdminAnyDatabase", db: "admin" }
+                        ]
+                    }
+                )
+
+        updateUser -> altera um usuário
+            sintaxe:
+                db.updateUser (
+                    {
+                        user: "nome",
+                        pwd "senha",
+                        customData: {},
+                        roles [
+                            {role: "role", db: "db"} | "role",
+                        ]
+                        digestPassword: boolean, // Opcional, TRUE o próprio mongodb cria um hash random com sha1
+                        writeConcern: {"wc"}
+                    }
+                )
+
+                Acesso requerido (Ação/Papel)
+                    revokeRole -> para atualizar papéis de um usuário
+                    grantRole -> para adicionar uma função a um usuário
+                    changeAnyPassword e changeAnyCustomData-> para alterar o pwd ou o customData de um usuário
+                    changeOwnPassword e changeOwnCustomData -> para alterar o próprio pwd ou o customData
+
+                Ex:
+                db.runCommand (
+                    {
+                        updateUser: "FilipeAdmin",
+                        customData: { teacher: false },
+                    }
+                )
+
+                CUIDADO!!!!
+                Atualizar os papéis, substituirá completamente os anteriores.
+                Para adicionar ou remover funções sem substituir todas:
+                    grantRolesToUser
+                    revokeRolesFromUser
+
+            dropUser -> remove um usuário
+                sintaxe:
+                    db.runCommand (
+                        {
+                            dropUser: "usuario",
+                            writeConcern: {"wc"}
+                        }
+                    )
+
+                    Acesso requerido (Ação)
+                        dropUser
+
+                    Ex:
+                    db.runCommand (
+                        {
+                            dropUser: "FilipeAdmin",
+                            writeConcern: { w: "majority", wtimeout: 5000 }
+                        }
+                    )
+
+            db.system.users.find() -> mostra todos usuários
+
+            dropAllUserFromDatabase -> remove todos usuários do banco de dados
+                sintaxe:
+                db.runCommand (
+                    {
+                        dropAllUserFromDatabase: 1,
+                        writeConcern: { "wc" }
+                    }
+                )
+
+                Acesso requerido
+                    dropUser
+
+
+            grantRolesToUser -> Adiciona papéis ao usuário
+                sintaxe:
+                {
+                    grantRolesToUser: "nome",
+                    roles: [<roles>],
+                    writeConcern: { <wc> }
+                }
+
+                Acesso requerido
+                    grantRole
+
+            revokeRolesFromUser -> Remove papéis do usuário
+                sintaxe:
+                {
+                    revokeRolesFromUser: "nome",
+                    roles: [<roles>],
+                    writeConcern: { <wc> }
+                }
+
+                Acesso requerido
+                    revokeRole
+
+            usersInfo
+                sintaxe:
+                {
+                    usersInfo: { user: <name>, db: <db>},
+                    showCredentials: <Boolean>,
+                    showPrivilegies: <Boolean>
+                }
+
+                Ex:
+                - listar todos usuários
+                db.runCommand ( {usersInfo: 1} )
+                - listar um usuário
+                db.runCommand ( {usersInfo: "FilipeAdmin"} )
+
+        Conectar autenticando
+            mongod --auth --port 27017
+            mongo --port 27017 -u "FilipeAdmin" -p "admin123" --authenticationDatabase "admin"
+
+Modelagem
+    - documento max 16MB
+    - mongo não se preocupa com duplicidade, e sim com desempenho
+
+Robomongo
+    - programa visual para gerenciar o mongoDb
+
+
+```
+
+
 ## Projeto final
-[Relacional -> NoSQL](https://github.com/Webschool-io/be-mean-instagram-mongodb-projects)
+[Relacional -> NoSQL MongoDb](https://github.com/Webschool-io/be-mean-instagram/tree/master/apostila/module-mongodb/project)
+https://github.com/Webschool-io/be-mean-instagram-mongodb-projects
 
 ### Links importantes:
 - MongoDb
