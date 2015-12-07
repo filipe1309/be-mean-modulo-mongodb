@@ -3,7 +3,7 @@
 Repositório criado para armazenar os exercicios do módulo de Mongodb do [Workshop de BE MEAN - Instagram](https://github.com/Webschool-io/be-mean-instagram), da [Webschool.io](https://github.com/Webschool-io)
 
 ### Aula 01
-####[Export e Import](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/module-mongodb/export_import.md)
+#### [Export e Import](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/module-mongodb/export_import.md)
 
  - [Slides](https://docs.google.com/presentation/d/1KXxmcwd47x4v2SymyiBPK7ucn80PruSvcw4mZ5S3nWc/edit?pli=1#slide=id.p)
  - [Vídeo](https://www.youtube.com/watch?v=leYxsEAL_yY)
@@ -36,7 +36,7 @@ Por fim, foram passada alguns comandos básicos(mongoimport/export) e configura�
 
 
 ### Aula 02
-####[use db, show dbs/collections, insert/save](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/classes/mongodb/class-02-resolved.md)
+#### [use db, show dbs/collections, insert/save](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/classes/mongodb/class-02-resolved.md)
 
  - [Slides](https://docs.google.com/presentation/d/1KXxmcwd47x4v2SymyiBPK7ucn80PruSvcw4mZ5S3nWc/edit?pli=1#slide=id.p)
  - [Vídeo](https://www.youtube.com/watch?v=PaNVk0V2UNI)
@@ -60,7 +60,7 @@ iterar um cursor: while( cur.hasNext()) {cur.next()}
 
 
 ### Aula 03
-####[find,findOne, Operadores de Aritmética/Lógicos/Existênciais/Negação](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/module-mongodb/find-findOne.md)
+#### [find,findOne, Operadores de Aritmética/Lógicos/Existênciais/Negação](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/module-mongodb/find-findOne.md)
 
  - [Slides](https://docs.google.com/presentation/d/1KXxmcwd47x4v2SymyiBPK7ucn80PruSvcw4mZ5S3nWc/edit?pli=1#slide=id.p)
  - [Vídeo](https://www.youtube.com/watch?v=cIHjA1hyPPY&feature=youtu.be)
@@ -103,7 +103,7 @@ Operadores existenciais -> {campo: {OE: boolean(true/false)}}
 ```
 
 ### Aula 04 - Parte 1
-####[Save, Update, Operadores de array](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/module-mongodb/update.md)
+#### [Save, Update, Operadores de array](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/module-mongodb/update.md)
 
  - [Slides](https://docs.google.com/presentation/d/1KXxmcwd47x4v2SymyiBPK7ucn80PruSvcw4mZ5S3nWc/edit?pli=1#slide=id.gd8825a620_4_118)
  - [Vídeo](https://www.youtube.com/watch?v=ONzJsNbv15U)
@@ -126,7 +126,7 @@ Operadores de array
 ```
 
 ### Aula 04 - Parte 2
-####[Options, Operadores de array/negação](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/module-mongodb/find-findOne.md)
+#### [Options, Operadores de array/negação](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/module-mongodb/find-findOne.md)
 
  - [Slides](https://docs.google.com/presentation/d/1KXxmcwd47x4v2SymyiBPK7ucn80PruSvcw4mZ5S3nWc/edit?pli=1#slide=id.gd8825a620_4_118)
  - [Vídeo](https://www.youtube.com/watch?v=ozbmQb6SVQk)
@@ -170,7 +170,7 @@ db.collection.update(query, modifications, options)
 ```
 
 ### Aula 05
-####[Distinct, group, limit, skip, aggregate](x)
+#### [Distinct, group, limit, skip, aggregate](x)
 
  - [Slides](https://docs.google.com/presentation/d/1KXxmcwd47x4v2SymyiBPK7ucn80PruSvcw4mZ5S3nWc/edit?pli=1#slide=id.ge839fbc67_123_11)
  - [Vídeo](https://www.youtube.com/watch?v=1eHc8reT_Vk)
@@ -224,7 +224,7 @@ aggregate([
 ```
 
 ### Aula 06 - Parte 1
-####[Relacionamentos](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/module-mongodb/relations.md)
+#### [Relacionamentos](https://github.com/Webschool-io/be-mean-instagram/blob/master/Apostila/module-mongodb/relations.md)
 
  - [Slides](https://docs.google.com/presentation/d/1KXxmcwd47x4v2SymyiBPK7ucn80PruSvcw4mZ5S3nWc/edit?pli=1#slide=id.ge8eaeb64b_110_8)
  - [Vídeo](https://www.youtube.com/watch?v=5bbWeEEzRQM)
@@ -265,23 +265,13 @@ Relacionamentos entre collections
 ```
 
 ### Aula 06 - Parte 2
-####[]()
+#### Explain, Índices, [Réplicas](https://github.com/Webschool-io/be-mean-instagram/blob/master/Apostila/module-mongodb/replica.md), [GridFs](https://github.com/Webschool-io/be-mean-instagram/blob/master/Apostila/module-mongodb/gridfs.md)
 
  - [Slides](https://docs.google.com/presentation/d/1KXxmcwd47x4v2SymyiBPK7ucn80PruSvcw4mZ5S3nWc/edit?pli=1#slide=id.ge8eaeb64b_110_8)
- - [Vídeo]()
+ - [Vídeo](https://www.youtube.com/watch?v=IXz4IL0da1k)
  - [Descrição do exercício](https://github.com/Webschool-io/be-mean-instagram/blob/master/apostila/classes/mongodb/class-06.md)
-    Name:
-    db.pokemons.find({name: ?? }).explain('executionStats').executionStats
-    db.pokemons.createIndex( { name: 1 } )
-    db.pokemons.find({name: ?? }).explain('executionStats').executionStats
 
-    2 campos:
-    db.pokemons.find({name: ?? , attack: ??}).explain('executionStats').executionStats
-    db.pokemons.createIndex( { name: 1, attack: 1 } )
-    db.pokemons.find({name: ??, attack: ?? }).explain('executionStats').executionStats
-
-
- - [Resolução do exercício](https://github.com/filipe1309/be-mean-modulo-mongodb/blob/master/exercises/class-05-resolved-filipe1309-filipe-leuch-bonfim.md)
+ - [Resolução do exercício](https://github.com/filipe1309/be-mean-modulo-mongodb/blob/master/exercises/class-06-resolved-filipe1309-filipe-leuch-bonfim.md)
 
 #### Resumo:
 ```
@@ -411,13 +401,10 @@ Réplica
 
 
 ### Aula 07
-####[]()
+#### Réplicas (continuação ...), [Sharding](https://github.com/Webschool-io/be-mean-instagram/blob/master/Apostila/module-mongodb/sharding.md), [Gerenciamento de usuários](https://github.com/Webschool-io/be-mean-instagram/blob/master/Apostila/module-mongodb/users-and-passwords.md)
 
  - [Slides](https://docs.google.com/presentation/d/1KXxmcwd47x4v2SymyiBPK7ucn80PruSvcw4mZ5S3nWc/edit?pli=1#slide=id.gea0103700_69_22)
  - [Vídeo](https://www.youtube.com/watch?v=1ElYrkSIvII)
- - [Descrição do exercício]()
-
- - [Resolução do exercício]()
 
 #### Resumo:
 ```
@@ -675,14 +662,12 @@ Modelagem
 
 Robomongo
     - programa visual para gerenciar o mongoDb
-
-
 ```
 
 
 ## Projeto final
-[Relacional -> NoSQL MongoDb](https://github.com/Webschool-io/be-mean-instagram/tree/master/apostila/module-mongodb/project)
-https://github.com/Webschool-io/be-mean-instagram-mongodb-projects
+[Relacional -> NoSQL MongoDb](https://github.com/Webschool-io/be-mean-instagram-mongodb-projects)
+Repositório: https://github.com/Webschool-io/be-mean-instagram-mongodb-projects
 
 ### Links importantes:
 - MongoDb
