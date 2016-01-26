@@ -677,7 +677,7 @@ var projects = [
       realocate: false,
       expired: false,
       visualizable_mod: "1",
-      tags:  ["alvo", "blad runner", "festa"],
+      tags:  ["token mental", "hirawata", "invasão", "Cyberpunk"],
       goals: [
           {
               name: "goal 1",
@@ -973,7 +973,158 @@ projects.forEach(function(project) {
 ### Retrieve - busca
 
 1. Liste as informações dos membros de 1 projeto específico que deve ser buscado pelo seu nome de forma a não ligar para maiúsculas e minúsculas.
+```javascript
+var project = db.projects.findOne(
+  {
+    name: /projeto - 3/i
+  },
+  {
+    _id: false,
+    members_project: true
+  })
+
+var members_in_project = []
+var getMemberProject = function(member) {
+  members_in_project.push(db.users.findOne({_id: member.user_id}))
+}  
+project.members_project.forEach(getMemberProject)
+members_in_project
+[
+  {
+    "_id": ObjectId("56a50ccb24eacf14e8493d51"),
+    "name": "Android",
+    "bio": "ndr",
+    "date_register": ISODate("2119-05-01T03:00:00Z"),
+    "avatar_path": "/user/ndr",
+    "auth": {
+      "username": "ndr",
+      "email": "ndr@lollita.andrew",
+      "password": "gothicLollita",
+      "last_access": ISODate("2119-05-01T03:00:00Z"),
+      "online": 1,
+      "disabled": 0,
+      "has_token": 0
+    },
+    "settings_system": {
+      "background_path": "/user/ndr/bg"
+    }
+  },
+  {
+    "_id": ObjectId("56a50cf024eacf14e8493d58"),
+    "name": "Cybro",
+    "bio": "robo",
+    "date_register": ISODate("2252-05-01T03:00:00Z"),
+    "avatar_path": "/user/cybro",
+    "auth": {
+      "username": "cybro",
+      "email": "cybro@robo.future",
+      "password": "future",
+      "last_access": ISODate("2252-05-01T03:00:00Z"),
+      "online": 0,
+      "disabled": 0,
+      "has_token": 0
+    },
+    "settings_system": {
+      "background_path": "/user/cybro/bg"
+    }
+  },
+  {
+    "_id": ObjectId("56a50ce224eacf14e8493d55"),
+    "name": "Jovem Nerd",
+    "bio": "mestre",
+    "date_register": ISODate("2119-05-01T03:00:00Z"),
+    "avatar_path": "/user/jn",
+    "auth": {
+      "username": "jovemnerd",
+      "email": "jovemnerd@talco.com",
+      "password": "talcoepomada",
+      "last_access": ISODate("2119-05-01T03:00:00Z"),
+      "online": 0,
+      "disabled": 0,
+      "has_token": 0
+    },
+    "settings_system": {
+      "background_path": "/user/jn/bg"
+    }
+  },
+  {
+    "_id": ObjectId("56a50cd124eacf14e8493d52"),
+    "name": "Oleg",
+    "bio": "russo",
+    "date_register": ISODate("2119-05-01T03:00:00Z"),
+    "avatar_path": "/user/oleg",
+    "auth": {
+      "username": "oleg",
+      "email": "oleg@urss.tucano",
+      "password": "urss",
+      "last_access": ISODate("2119-05-01T03:00:00Z"),
+      "online": 0,
+      "disabled": 0,
+      "has_token": 0
+    },
+    "settings_system": {
+      "background_path": "/user/oleg/bg"
+    }
+  },
+  {
+    "_id": ObjectId("56a503e27d5b9da4738c268f"),
+    "name": "Ozob",
+    "bio": "replicante",
+    "date_register": ISODate("2119-05-01T03:00:00Z"),
+    "avatar_path": "/user/ozob",
+    "auth": {
+      "username": "ozob",
+      "email": "ozob@bozo.azaghal",
+      "password": "babaca",
+      "last_access": ISODate("2119-05-01T03:00:00Z"),
+      "online": 0,
+      "disabled": 0,
+      "has_token": 0
+    },
+    "settings_system": {
+      "background_path": "/user/ozob/bg"
+    }
+  }
+]
+
+```
 2. Liste todos os projetos com a tag que você escolheu para os 3 projetos em comum.
+`Cyberpunk``
+```javascript
+var fields = { _id: false, name: true, tags: true }
+
+var query = { tags: { $in: [ /cyberpunk/i ] } }
+//OU
+var query = { tags: { $eq: 'Cyberpunk' } }
+
+db.projects.find(query, fields)
+{
+  "name": "Projeto - 1",
+  "tags": [
+    "token mental",
+    "hirawata",
+    "invasão",
+    "Cyberpunk"
+  ]
+}
+{
+  "name": "Projeto - 3",
+  "tags": [
+    "Cyberpunk",
+    "armas",
+    "robo"
+  ]
+}
+{
+  "name": "Projeto - 4",
+  "tags": [
+    "Cyberpunk",
+    "conhecimento",
+    "futuro"
+  ]
+}
+
+```
 3. Liste apenas os nomes de todas as atividades para todos os projetos.
 4. Liste todos os projetos que não possuam uma tag.
 5. Liste todos os usuários que não fazem parte do primeiro projeto cadastrado.
