@@ -1126,10 +1126,90 @@ db.projects.find(query, fields)
 
 ```
 3. Liste apenas os nomes de todas as atividades para todos os projetos.
+```javascript
+var projects = db.projects.find();
+var activities = [];
+var getActivity = function(activity) {
+    activities.push( db.activities.findOne({ _id: activity.activity_id } ).name );};
+projects.forEach(function(project) {
+  project.goals.forEach(function(goal) {
+    goal.activities.forEach(getActivity)
+  })
+});
+activities
+[
+  "infiltrar na festa",
+  "encontrar o portador do token mental",
+  "escapar da festa",
+  "encontrar o container",
+  "obter carga misteriosa",
+  "escapar das naves da hirawata corporation",
+  "fugir para o esconderijo do oleg",
+  "descobrir a funcionalidade da carga misteriosa",
+  "se encontrar com Ulib",
+  "descobrir o conteúdo do robo",
+  "burlar as defesas do robo",
+  "encontar o core"
+]
+```
 4. Liste todos os projetos que não possuam uma tag.
+```javascript
+var query = {tags: {$exists: true, $ne: []} }
+var fields = {name: true}
+db.projects.find(query, fields)
+{
+  "_id": ObjectId("56a599a56048375df3622432"),
+  "name": "Projeto - 1"
+}
+{
+  "_id": ObjectId("56a599a66048375df3622433"),
+  "name": "Projeto - 2"
+}
+{
+  "_id": ObjectId("56a599a66048375df3622434"),
+  "name": "Projeto - 3"
+}
+{
+  "_id": ObjectId("56a599a66048375df3622435"),
+  "name": "Projeto - 4"
+}
+{
+  "_id": ObjectId("56a599a66048375df3622436"),
+  "name": "Projeto - 5"
+}
+```
 5. Liste todos os usuários que não fazem parte do primeiro projeto cadastrado.
-
-
+```javascript
+var project_1 = db.projects.findOne({name: /projeto - 1/i})
+var memebers_id = []
+project_1.members_project.forEach(function(member_project) {
+  memebers_id.push(member_project.user_id)
+})
+var query = { _id: {$nin: memebers_id} }
+var fields = { name: true }
+var users = db.users.find(query, fields)
+users
+{
+  "_id": ObjectId("56a503e27d5b9da4738c268f"),
+  "name": "Ozob"
+}
+{
+  "_id": ObjectId("56a50cd724eacf14e8493d53"),
+  "name": "Steve Durden"
+}
+{
+  "_id": ObjectId("56a50ce224eacf14e8493d55"),
+  "name": "Jovem Nerd"
+}
+{
+  "_id": ObjectId("56a50ceb24eacf14e8493d57"),
+  "name": "Ulib"
+}
+{
+  "_id": ObjectId("56a50cf024eacf14e8493d58"),
+  "name": "Cybro"
+}
+```
 ### Update - alteração
 
 1. Adicione para todos os projetos o campo `views: 0`.
