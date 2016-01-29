@@ -1182,11 +1182,11 @@ db.projects.find(query, fields)
 5. Liste todos os usuários que não fazem parte do primeiro projeto cadastrado.
 ```javascript
 var project_1 = db.projects.findOne({name: /projeto - 1/i})
-var memebers_id = []
+var members_id = []
 project_1.members_project.forEach(function(member_project) {
-  memebers_id.push(member_project.user_id)
+  members_id.push(member_project.user_id)
 })
-var query = { _id: {$nin: memebers_id} }
+var query = { _id: {$nin: members_id} }
 var fields = { name: true }
 var users = db.users.find(query, fields)
 users
@@ -1219,6 +1219,12 @@ var query = {};
 var mod = {$set: {views: 0}};
 var opt = {multi: true};
 db.projects.update(query, mod, opt);
+Updated 5 existing record(s) in 15ms
+WriteResult({
+  "nMatched": 5,
+  "nUpserted": 0,
+  "nModified": 5
+})
 db.projects.find({}, {name:true, views: true});
 {
   "_id": ObjectId("56a599a56048375df3622432"),
@@ -1248,8 +1254,114 @@ db.projects.find({}, {name:true, views: true});
 
 ```
 2. Adicione 1 tag diferente para cada projeto.
+```javascript
+var projects = db.projects.find();
+var addTag = function(project) {
+  project.tags.push("TAG - "+project.name);
+  db.projects.save(project);
+};
+projects.forEach(addTag);
+Updated 1 existing record(s) in 1ms
+Updated 1 existing record(s) in 1ms
+Updated 1 existing record(s) in 1ms
+Updated 1 existing record(s) in 1ms
+Updated 1 existing record(s) in 0ms
+db.projects.find({}, {name: true, tags: true});
+{
+  "_id": ObjectId("56a599a56048375df3622432"),
+  "name": "Projeto - 1",
+  "tags": [
+    "token mental",
+    "hirawata",
+    "invasão",
+    "Cyberpunk",
+    "TAG - Projeto - 1"
+  ]
+}
+{
+  "_id": ObjectId("56a599a66048375df3622433"),
+  "name": "Projeto - 2",
+  "tags": [
+    "token mental",
+    "container",
+    "invasão",
+    "TAG - Projeto - 2"
+  ]
+}
+{
+  "_id": ObjectId("56a599a66048375df3622434"),
+  "name": "Projeto - 3",
+  "tags": [
+    "Cyberpunk",
+    "armas",
+    "robo",
+    "TAG - Projeto - 3"
+  ]
+}
+{
+  "_id": ObjectId("56a599a66048375df3622435"),
+  "name": "Projeto - 4",
+  "tags": [
+    "Cyberpunk",
+    "conhecimento",
+    "futuro",
+    "TAG - Projeto - 4"
+  ]
+}
+{
+  "_id": ObjectId("56a599a66048375df3622436"),
+  "name": "Projeto - 5",
+  "tags": [
+    "fuga",
+    "bitoca",
+    "explosão",
+    "TAG - Projeto - 5"
+  ]
+}
+```
 3. Adicione 2 membros diferentes para cada projeto.
+```javascript
+var projects = db.projects.find();
+var addMembers = function(project) {
+  var members_id = [];
+  project.members_project.forEach(function(member_project) {
+    members_id.push(member_project.user_id)
+  });
+  var query = { _id: {$nin: members_id} };
+  var fields = { name: true };
+  var users = db.users.find(query, fields).limit(2);
+  users.forEach(function(user){
+    new_member = { user_id: user._id, notify: true, type_member: {type_name: "type-0"} }
+    project.members_project.push(new_member);
+    db.projects.save(project);
+  })
+};
+projects.forEach(addMembers);
+```
 4. Adicione 1 comentário em cada atividade, deixe apenas 1 projeto sem.
+```javascript
+var activities = db.activities.find();
+var addComment = function(activity) {
+  var comment = {
+      text: "comment - "+activity.name,
+      date_comment: Date.now(),
+      members_comment: [
+          {
+              member_project: {
+                  user_id: ObjectId("56a503e27d5b9da4738c268f"),
+              }
+          }
+      ],
+  }
+  activity.comments.push(comment);
+}
+
+activities.forEach(addComment);
+
+
+
+
+```
 5. Adicione 1 projeto inteiro com **UPSERT**.
 
 ### Delete - remoção
