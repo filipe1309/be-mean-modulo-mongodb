@@ -1088,6 +1088,7 @@ members_in_project
 ]
 
 ```
+
 2. Liste todos os projetos com a tag que você escolheu para os 3 projetos em comum.
 `Cyberpunk``
 ```javascript
@@ -1213,6 +1214,39 @@ users
 ### Update - alteração
 
 1. Adicione para todos os projetos o campo `views: 0`.
+```javascript
+var query = {};
+var mod = {$set: {views: 0}};
+var opt = {multi: true};
+db.projects.update(query, mod, opt);
+db.projects.find({}, {name:true, views: true});
+{
+  "_id": ObjectId("56a599a56048375df3622432"),
+  "name": "Projeto - 1",
+  "views": 0
+}
+{
+  "_id": ObjectId("56a599a66048375df3622433"),
+  "name": "Projeto - 2",
+  "views": 0
+}
+{
+  "_id": ObjectId("56a599a66048375df3622434"),
+  "name": "Projeto - 3",
+  "views": 0
+}
+{
+  "_id": ObjectId("56a599a66048375df3622435"),
+  "name": "Projeto - 4",
+  "views": 0
+}
+{
+  "_id": ObjectId("56a599a66048375df3622436"),
+  "name": "Projeto - 5",
+  "views": 0
+}
+
+```
 2. Adicione 1 tag diferente para cada projeto.
 3. Adicione 2 membros diferentes para cada projeto.
 4. Adicione 1 comentário em cada atividade, deixe apenas 1 projeto sem.
