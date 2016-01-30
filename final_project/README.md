@@ -1353,16 +1353,99 @@ var addComment = function(activity) {
           }
       ],
   }
-  activity.comments.push(comment);
+  var mod = {$set: { comments: [comment]}}
+  db.activities.update(activity, mod);
 }
 
 activities.forEach(addComment);
-
-
-
-
+Updated 1 existing record(s) in 1ms
+Updated 1 existing record(s) in 0ms
+Updated 1 existing record(s) in 1ms
+Updated 1 existing record(s) in 0ms
+Updated 1 existing record(s) in 1ms
+Updated 1 existing record(s) in 0ms
+Updated 1 existing record(s) in 1ms
+Updated 1 existing record(s) in 0ms
+Updated 1 existing record(s) in 1ms
+Updated 1 existing record(s) in 0ms
+Updated 1 existing record(s) in 0ms
+Updated 1 existing record(s) in 0ms
 ```
+
 5. Adicione 1 projeto inteiro com **UPSERT**.
+```javascript
+var project = {
+  "name": "Projeto - 6",
+  "description": "descrição - 6",
+  "date_begin": new Date(2252,04,01),
+  "date_dream": new Date(2252,04,01),
+  "date_end": new Date(2252,04,01),
+  "visible": true,
+  "realocate": false,
+  "expired": false,
+  "visualizable_mod": "1",
+  "tags": [
+    "upsert",
+    "setOnInsert",
+    "shazam"
+  ],
+  "goals": [
+    {
+      "name": "goal 1",
+      "description": "Deu Zica",
+      "date_begin": new Date(2252,04,01),
+      "date_dream": new Date(2252,04,01),
+      "date_end": new Date(2252,04,01),
+      "realocate": false,
+      "expired": false,
+      "goal_historic": {
+        "date_realocate": new Date(2252,04,01)
+      },
+      "activities": [ ],
+      "tags": [
+        "Alakazam",
+        "tibum",
+        "bilu"
+      ]
+    }
+  ],
+  "members_project": [
+    {
+      "user_id": ObjectId("56a50cd124eacf14e8493d52"),
+      "notify": true,
+      "type_member": {
+        "type_name": "type-0"
+      }
+    },
+    {
+      "user_id": ObjectId("56a50cd724eacf14e8493d53"),
+      "notify": true,
+      "type_member": {
+        "type_name": "type-0"
+      }
+    },
+    {
+      "user_id": ObjectId("56a50ccb24eacf14e8493d51"),
+      "notify": true,
+      "type_member": {
+        "type_name": "type-0"
+      }
+    }
+  ],
+  "views": 0
+};
+var query = {name: /projeto - 06/i};
+var mod = {$setOnInsert: project};
+var opt = {upsert: true};
+db.projects.update(query, mod, opt);
+Updated 1 new record(s) in 24ms
+WriteResult({
+  "nMatched": 0,
+  "nUpserted": 1,
+  "nModified": 0,
+  "_id": ObjectId("56ac2501b3f2facabeaaba3b")
+})
+```
 
 ### Delete - remoção
 
