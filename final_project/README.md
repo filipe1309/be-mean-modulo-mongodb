@@ -1450,10 +1450,74 @@ WriteResult({
 ### Delete - remoção
 
 1. Apague todos os projetos que não possuam *tags*.
+```javascript
+var query = { $or: [{tags: {$exists: false}}, {tags: {$eq: []}}] }
+var opt = { justOne: false }
+db.projects.remove(query, opt)
+Removed 0 record(s) in 1ms
+WriteResult({
+  "nRemoved": 0
+})
+```
 2. Apague todos os projetos que não possuam comentários nas atividades.
+```javascript
+// 1º: Seleciona as activities que não possuem comentários
+var no_comments_activities = []
+var query = { $or: [{comments: {$exists: false}}, {comments: {$eq: []}}] }
+var fields = { _id: true }
+db.activities.find(query, fields).toArray().forEach( function(activity) {
+  no_comments_activities.push(activity._id);
+});
+
+// 2º: Remove os projetos que possuem aquelas activities selecionadas
+var query = {'goals.activities.activity_id' : { $in : no_comments_activities } }
+var opt = { justOne: false }
+db.projects.remove(query, opt)
+Removed 0 record(s) in 1ms
+WriteResult({
+  "nRemoved": 0
+})
+```
+
 3. Apague todos os projetos que não possuam atividades.
+```javascript
+var query = {$or: [{"goals.activities": {$exists: false}}, {"goals.activities": {$eq: []}}] }
+var opt = { justOne: false }
+db.projects.remove(query, opt)
+Removed 2 record(s) in 1ms
+WriteResult({
+  "nRemoved": 2
+})
+```
 4. Escolha 2 usuário e apague todos os projetos em que os 2 fazem parte.
+```javascript
+/*
+Jovem Nerd ObjectId("56a50ce224eacf14e8493d55"),
+Ulib ObjectId("56a50ceb24eacf14e8493d57"),
+*/
+var members_project = [
+    ObjectId("56a50ce224eacf14e8493d55"),
+    ObjectId("56a50ceb24eacf14e8493d57")
+  ]
+var query = {"members_project.user_id": {$in: members_project}}
+var opt = { justOne: false }
+db.projects.remove(query, opt)
+Removed 2 record(s) in 1ms
+WriteResult({
+  "nRemoved": 2
+})
+```
+
 5. Apague todos os projetos que possuam uma determinada *tag* em *goal*.
+```javascript
+var query = {"goals.tags": {$in: [/blad runner/i]}}
+var opt = { justOne: false }
+db.projects.remove(query, opt)
+Removed 1 record(s) in 0ms
+WriteResult({
+  "nRemoved": 1
+})
+```
 
 ### Gerenciamento de usuários
 
