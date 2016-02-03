@@ -1522,10 +1522,361 @@ WriteResult({
 ### Gerenciamento de usuários
 
 1. Crie um usuário com permissões **APENAS** de Leitura.
+```javascript
+use admin
+db.createUser(
+   {
+     user: "filipe-reader",
+     pwd: "123mudar",
+     roles: ["read"]
+   }
+)
+Successfully added user: {
+  "user": "filipe-reader",
+  "roles": [
+    "read"
+  ]
+}
+```
 2. Crie um usuário com permissões de Escrita e Leitura.
+```javascript
+use admin
+db.createUser(
+   {
+     user: "filipe-reader-writer",
+     pwd: "123mudar",
+     roles: ["readWrite"]
+   }
+)
+Successfully added user: {
+  "user": "filipe-reader-writer",
+  "roles": [
+    "readWrite"
+  ]
+}
+```
 3. Adicionar o papel `grantRolesToUser` e `revokeRole` para o usuário com Escrita e Leitura.
+```javascript
+use admin
+db.createRole(
+   {
+     role: "grantRolesToUser",
+     privileges: [
+       { resource: { db: "admin", collection: "" }, actions: [ "grantRole" ] }
+     ],
+     roles: ["readWrite"]
+   }
+)
+{
+  "role": "grantRolesToUser",
+  "privileges": [
+    {
+      "resource": {
+        "db": "admin",
+        "collection": ""
+      },
+      "actions": [
+        "grantRole"
+      ]
+    }
+  ],
+  "roles": [
+    "readWrite"
+  ]
+}
+
+db.createRole(
+   {
+     role: "revokeRole",
+     privileges: [
+       { resource: { db: "admin", collection: "" }, actions: [ "revokeRole" ] }
+     ],
+     roles: ["readWrite"]
+   }
+)
+{
+  "role": "revokeRole",
+  "privileges": [
+    {
+      "resource": {
+        "db": "admin",
+        "collection": ""
+      },
+      "actions": [
+        "revokeRole"
+      ]
+    }
+  ],
+  "roles": [
+    "readWrite"
+  ]
+}
+
+db.runCommand({ grantRolesToUser: "filipe-reader-writer",
+  roles: [
+    "grantRolesToUser",
+    "revokeRole"
+  ],
+})
+{
+  "ok": 1
+}
+
+```
 4. Remover o papel `grantRolesToUser` para o usuário com Escrita e Leitura.
+```javascript
+se admin
+db.runCommand({ revokeRolesFromUser: "filipe-reader-writer",
+  roles: [
+    "grantRolesToUser",
+  ],
+})
+{
+  "ok": 1
+}
+```
 5. Listar todos os usuários com seus papéis e ações.
+```javascript
+// roles = showCredentials
+// actions = show Privileges
+db.runCommand({
+  usersInfo: [ { user: "filipe-reader", db:"admin" }, { user: "filipe-reader-writer", db:"admin" } ],
+  showCredentials: true,
+  showPrivileges: true
+})
+{
+  "users": [
+    {
+      "_id": "admin.filipe-reader",
+      "user": "filipe-reader",
+      "db": "admin",
+      "credentials": {
+        "SCRAM-SHA-1": {
+          "iterationCount": 10000,
+          "salt": "giNX3MJ6e0qZezypZl8Czg==",
+          "storedKey": "yohdEMNpS6eEBuifbQuasZoKfbA=",
+          "serverKey": "X3xGCyeC4NuK5bgwCkxdNiJ1gp4="
+        }
+      },
+      "roles": [
+        {
+          "role": "read",
+          "db": "admin"
+        }
+      ],
+      "inheritedRoles": [
+        {
+          "role": "read",
+          "db": "admin"
+        }
+      ],
+      "inheritedPrivileges": [
+        {
+          "resource": {
+            "db": "admin",
+            "collection": ""
+          },
+          "actions": [
+            "collStats",
+            "dbHash",
+            "dbStats",
+            "find",
+            "killCursors",
+            "listCollections",
+            "listIndexes",
+            "planCacheRead"
+          ]
+        },
+        {
+          "resource": {
+            "anyResource": true
+          },
+          "actions": [
+            "listCollections"
+          ]
+        },
+        {
+          "resource": {
+            "db": "admin",
+            "collection": "system.indexes"
+          },
+          "actions": [
+            "collStats",
+            "dbHash",
+            "dbStats",
+            "find",
+            "killCursors",
+            "listCollections",
+            "listIndexes",
+            "planCacheRead"
+          ]
+        },
+        {
+          "resource": {
+            "db": "admin",
+            "collection": "system.js"
+          },
+          "actions": [
+            "collStats",
+            "dbHash",
+            "dbStats",
+            "find",
+            "killCursors",
+            "listCollections",
+            "listIndexes",
+            "planCacheRead"
+          ]
+        },
+        {
+          "resource": {
+            "db": "admin",
+            "collection": "system.namespaces"
+          },
+          "actions": [
+            "collStats",
+            "dbHash",
+            "dbStats",
+            "find",
+            "killCursors",
+            "listCollections",
+            "listIndexes",
+            "planCacheRead"
+          ]
+        }
+      ]
+    },
+    {
+      "_id": "admin.filipe-reader-writer",
+      "user": "filipe-reader-writer",
+      "db": "admin",
+      "credentials": {
+        "SCRAM-SHA-1": {
+          "iterationCount": 10000,
+          "salt": "rIEQ7857AnUUeKJfuTJuAQ==",
+          "storedKey": "sIOKv6c9o9KcW2HX5E4N8drxHzw=",
+          "serverKey": "9bIipKBanXDcx23fvi97slucls0="
+        }
+      },
+      "roles": [
+        {
+          "role": "revokeRole",
+          "db": "admin"
+        },
+        {
+          "role": "readWrite",
+          "db": "admin"
+        }
+      ],
+      "inheritedRoles": [
+        {
+          "role": "readWrite",
+          "db": "admin"
+        },
+        {
+          "role": "revokeRole",
+          "db": "admin"
+        }
+      ],
+      "inheritedPrivileges": [
+        {
+          "resource": {
+            "db": "admin",
+            "collection": ""
+          },
+          "actions": [
+            "collStats",
+            "convertToCapped",
+            "createCollection",
+            "createIndex",
+            "dbHash",
+            "dbStats",
+            "dropCollection",
+            "dropIndex",
+            "emptycapped",
+            "find",
+            "insert",
+            "killCursors",
+            "listCollections",
+            "listIndexes",
+            "planCacheRead",
+            "remove",
+            "renameCollectionSameDB",
+            "revokeRole",
+            "update"
+          ]
+        },
+        {
+          "resource": {
+            "anyResource": true
+          },
+          "actions": [
+            "listCollections"
+          ]
+        },
+        {
+          "resource": {
+            "db": "admin",
+            "collection": "system.indexes"
+          },
+          "actions": [
+            "collStats",
+            "dbHash",
+            "dbStats",
+            "find",
+            "killCursors",
+            "listCollections",
+            "listIndexes",
+            "planCacheRead"
+          ]
+        },
+        {
+          "resource": {
+            "db": "admin",
+            "collection": "system.js"
+          },
+          "actions": [
+            "collStats",
+            "convertToCapped",
+            "createCollection",
+            "createIndex",
+            "dbHash",
+            "dbStats",
+            "dropCollection",
+            "dropIndex",
+            "emptycapped",
+            "find",
+            "insert",
+            "killCursors",
+            "listCollections",
+            "listIndexes",
+            "planCacheRead",
+            "remove",
+            "renameCollectionSameDB",
+            "update"
+          ]
+        },
+        {
+          "resource": {
+            "db": "admin",
+            "collection": "system.namespaces"
+          },
+          "actions": [
+            "collStats",
+            "dbHash",
+            "dbStats",
+            "find",
+            "killCursors",
+            "listCollections",
+            "listIndexes",
+            "planCacheRead"
+          ]
+        }
+      ]
+    }
+  ],
+  "ok": 1
+}
+```
 
 ### Cluster
 
