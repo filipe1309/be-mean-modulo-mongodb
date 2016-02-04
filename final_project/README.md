@@ -1885,6 +1885,49 @@ Depois de criada toda sua base você deverá criar um cluster utilizando:
 - 1 Router
 - 1 Config Server
 - 3 Shardings
-- 3 Replicas
+- 3 Replicas (3 primárias? 1 para cada shard?)
+ - initialSync (clone)
+ - replication (replicação e sincronização atraves do oplog(log de operaçẽos))
+```javascript
+// 1- criar um diretorio para cada replica (onde irá persistir os dados)
+mkdir /data/rs1
+mkdir /data/rs2
+mkdir /data/rs3
+
+// 2- Levantar cada replica, executando um comando por terminal, iniciar os processos do mongod com --replSet (--logpath /data/rs1/log.txt (salvar log em um arquivo),--fork para rodar em bg)
+mongod --replSet replica_set --port 27017 --dbpath /data/rs1
+mongod --replSet replica_set --port 27018 --dbpath /data/rs2
+mongod --replSet replica_set --port 27019 --dbpath /data/rs3
+
+// 3- Conectando na replica primaria (em um novo terminal), e criando JSON de configuração
+mongo --port 27017
+rsconf = {
+   _id: "replica_set",
+   members: [
+    {
+     _id: 0,
+     host: "127.0.0.1:27017"
+    }
+  ]
+}
+
+// 4- executar rs.initiate(JSON_de_config)
+rs.initiate(rsconf)
+
+// 5- Adicionar as outras Replicas(secundarias) caso não tenha as colocado no JSON de configuração.
+rs.add("127.0.0.1:27018")
+rs.add("127.0.0.1:27019")
+
+// outros comandos
+// configuração da replica set
+rs.status()
+// verificar status do oplog
+rs.printReplicationInfo()
+
+// rebaixar a PRIMARY -> SECONDARY, o mongoDb elegerá outra secundaria para ser primaria (arbitros)
+rs.stepDown()
+
+```
 
 Você deverá escolher qual sua coleção deverá ser *shardeada* para poder aguentar muita carga repentinamente e deverá replicar cada Shard, pode ser feito localmente como em alguma VPS FREE.
+``activities``
