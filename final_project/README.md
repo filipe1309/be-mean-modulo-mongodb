@@ -1883,8 +1883,61 @@ db.runCommand({
 Depois de criada toda sua base você deverá criar um cluster utilizando:
 
 - 1 Router
+```javascript
+// 2º
+// (em um novo terminal) instancia de mongo, e faz o roteamento de IO
+mongos --configdb localhost:27010 --port 27011
+
+
+//4º Registrando os shards no router (novo terminal)
+//Primeiramente conecta no Router:
+
+mongo --port 27011 --host localhost
+//use be-mean
+
+//Depois registra os shards:
+
+sh.addShard("localhost:27012")
+sh.addShard("localhost:27013")
+sh.addShard("localhost:27014")
+
+// 5º define a database a ser shardeada
+sh.enableSharding("be-mean")
+
+// 6º define qual coleção desta database será shardeada (db.collection, {shard_key})
+// shard_key = campo que será quebrado
+sh.shardCollection("be-mean.notas", {"_id" : 1})
+
+```
+
 - 1 Config Server
+```javascript
+// 1º
+// (em um novo terminal) mapeia os chunks(pedaços) através dos metadados
+mkdir \data\configdb
+mongod --configsvr --port 27010
+
+
+```
+
 - 3 Shardings
+```javascript
+// 3º
+mkdir /data/shard1 && mkdir /data/shard2 && mkdir /data/shard3
+// Shard 1
+mongod --port 27012 --dbpath /data/shard1
+
+// Shard 2 (novo terminal)
+mongod --port 27013 --dbpath /data/shard2
+
+// Shard 3 (novo terminal)
+mongod --port 27014 --dbpath /data/shard3
+
+
+
+
+```
+
 - 3 Replicas (3 primárias? 1 para cada shard?)
  - initialSync (clone)
  - replication (replicação e sincronização atraves do oplog(log de operaçẽos))
@@ -1895,6 +1948,7 @@ mkdir /data/rs2
 mkdir /data/rs3
 
 // 2- Levantar cada replica, executando um comando por terminal, iniciar os processos do mongod com --replSet (--logpath /data/rs1/log.txt (salvar log em um arquivo),--fork para rodar em bg)
+// pkill mongod
 mongod --replSet replica_set --port 27017 --dbpath /data/rs1
 mongod --replSet replica_set --port 27018 --dbpath /data/rs2
 mongod --replSet replica_set --port 27019 --dbpath /data/rs3
@@ -1931,3 +1985,77 @@ rs.stepDown()
 
 Você deverá escolher qual sua coleção deverá ser *shardeada* para poder aguentar muita carga repentinamente e deverá replicar cada Shard, pode ser feito localmente como em alguma VPS FREE.
 ``activities``
+
+```javascript
+//https://docs.mongodb.org/manual/tutorial/convert-replica-set-to-replicated-shard-cluster/
+// Replica
+
+mkdir /data/rs1 && mkdir /data/rs2 && mkdir /data/rs3
+
+mongod --replSet replica_set --port 27017 --dbpath /data/rs1
+// nt
+mongod --replSet replica_set --port 27018 --dbpath /data/rs2
+
+// nt
+mongod --replSet replica_set --port 27019 --dbpath /data/rs3
+
+// nt
+mongo --port 27017
+rsconf = {
+   _id: "replica_set",
+   members: [
+    {
+     _id: 0,
+     host: "127.0.0.1:27017"
+    }
+  ]
+}
+rs.initiate(rsconf)
+
+rs.add("127.0.0.1:27018")
+rs.add("127.0.0.1:27019")
+
+// Sharding
+// nt
+// config server
+mkdir \data\configdb
+mongod --configsvr --port 27010
+/*
+rs.initiate( {
+   _id: "configReplSet",
+   configsvr: true,
+   members: [
+      { _id: 0, host: "localhost:27017" },
+      { _id: 1, host: "localhost:27018" },
+      { _id: 2, host: "localhost:27019" }
+   ]
+} )
+*/
+
+// nt
+// router
+mongos --configdb localhost:27010 --port 27011
+//mongo localhost:27017/admin
+
+// nt
+mkdir /data/shard1 && mkdir /data/shard2 && mkdir /data/shard3
+// Shard 1
+mongod --port 27012 --dbpath /data/shard1
+
+// nt - Shard 2
+mongod --port 27013 --dbpath /data/shard2
+
+// nt - Shard 3
+mongod --port 27014 --dbpath /data/shard3
+
+// nt
+mongo --port 27011 --host localhost
+
+sh.addShard("localhost:27012")
+sh.addShard("localhost:27013")
+sh.addShard("localhost:27014")
+
+sh.enableSharding("be-mean-modulo-mongodb-pf")
+
+sh.shardCollection("be-mean-modulo-mongodb-pf.activities", {"_id" : 1})
+```
