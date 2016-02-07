@@ -3,7 +3,7 @@
 **Data** Date.now() //em timestamp
 
 ## Para qual sistema você usaria o MogoDB (diferente desse)?
-Acredito que o MongoDB seja melhor apreveitado em sistemas que necessitam ser escaláveis, e que possuem uma modelagem com poucos relacionamentos.
+Acredito que o MongoDB seja melhor aproveitado em sistemas que necessitam ser escaláveis, e que possuem uma modelagem com poucos relacionamentos.
 
 ## Qual a modelagem da sua coleção de `users`?
 Nesta modelagem, as tabelas ``user``, ``settings-system`` e ``auth`` foram unidas em somente uma coleção chamada ``users``.
@@ -116,7 +116,7 @@ activities = {
 ```
 
 ## Create - cadastro
-1. Cadastre 10 usuários diferentes.
+#### 1. Cadastre 10 usuários diferentes.
 
 ```javascript
     // 1
@@ -301,7 +301,7 @@ activities = {
 
 ```
 
-2. Cadastre 5 projetos diferentes.
+#### 2. Cadastre 5 projetos diferentes.
     - cada um com 5 membros, sempre diferentes dentro dos projetos;
     - cada um com pelo menos 3 tags diferentes;
         - escolha 1 *tag* onde deva ficar em 2 projetos;
@@ -825,7 +825,7 @@ projects.forEach(function(project) {
 ```
 
 ## Retrieve - busca
-1. Liste as informações dos membros de 1 projeto específico que deve ser buscado pelo seu nome de forma a não ligar para maiúsculas e minúsculas.
+#### 1. Liste as informações dos membros de 1 projeto específico que deve ser buscado pelo seu nome de forma a não ligar para maiúsculas e minúsculas.
 
 ```javascript
 var project = db.projects.findOne(
@@ -940,10 +940,9 @@ members_in_project
     }
   }
 ]
-
 ```
 
-2. Liste todos os projetos com a tag que você escolheu para os 3 projetos em comum.
+#### 2. Liste todos os projetos com a tag que você escolheu para os 3 projetos em comum.
 
 ``Cyberpunk``
 
@@ -980,10 +979,9 @@ db.projects.find(query, fields)
     "futuro"
   ]
 }
-
 ```
 
-3. Liste apenas os nomes de todas as atividades para todos os projetos.
+#### 3. Liste apenas os nomes de todas as atividades para todos os projetos.
 
 ```javascript
 var projects = db.projects.find();
@@ -1012,7 +1010,7 @@ activities
 ]
 ```
 
-4. Liste todos os projetos que não possuam uma tag.
+#### 4. Liste todos os projetos que não possuam uma tag.
 
 ```javascript
 var query = {tags: {$exists: true, $ne: []} }
@@ -1040,7 +1038,7 @@ db.projects.find(query, fields)
 }
 ```
 
-5. Liste todos os usuários que não fazem parte do primeiro projeto cadastrado.
+#### 5. Liste todos os usuários que não fazem parte do primeiro projeto cadastrado.
 
 ```javascript
 var project_1 = db.projects.findOne({name: /projeto - 1/i})
@@ -1075,7 +1073,7 @@ users
 ```
 
 ## Update - alteração
-1. Adicione para todos os projetos o campo `views: 0`.
+#### 1. Adicione para todos os projetos o campo `views: 0`.
 
 ```javascript
 var query = {};
@@ -1116,7 +1114,8 @@ db.projects.find({}, {name:true, views: true});
 }
 
 ```
-2. Adicione 1 tag diferente para cada projeto.
+
+#### 2. Adicione 1 tag diferente para cada projeto.
 
 ```javascript
 var projects = db.projects.find();
@@ -1183,7 +1182,8 @@ db.projects.find({}, {name: true, tags: true});
   ]
 }
 ```
-3. Adicione 2 membros diferentes para cada projeto.
+
+#### 3. Adicione 2 membros diferentes para cada projeto.
 
 ```javascript
 var projects = db.projects.find();
@@ -1203,7 +1203,8 @@ var addMembers = function(project) {
 };
 projects.forEach(addMembers);
 ```
-4. Adicione 1 comentário em cada atividade, deixe apenas 1 projeto sem.
+
+#### 4. Adicione 1 comentário em cada atividade, deixe apenas 1 projeto sem.
 
 ```javascript
 var activities = db.activities.find();
@@ -1238,7 +1239,7 @@ Updated 1 existing record(s) in 0ms
 Updated 1 existing record(s) in 0ms
 ```
 
-5. Adicione 1 projeto inteiro com **UPSERT**.
+#### 5. Adicione 1 projeto inteiro com **UPSERT**.
 
 ```javascript
 var project = {
@@ -1315,7 +1316,7 @@ WriteResult({
 ```
 
 ## Delete - remoção
-1. Apague todos os projetos que não possuam *tags*.
+#### 1. Apague todos os projetos que não possuam *tags*.
 
 ```javascript
 var query = { $or: [{tags: {$exists: false}}, {tags: {$eq: []}}] }
@@ -1326,7 +1327,8 @@ WriteResult({
   "nRemoved": 0
 })
 ```
-2. Apague todos os projetos que não possuam comentários nas atividades.
+
+#### 2. Apague todos os projetos que não possuam comentários nas atividades.
 
 ```javascript
 // 1º: Seleciona as activities que não possuem comentários
@@ -1347,7 +1349,7 @@ WriteResult({
 })
 ```
 
-3. Apague todos os projetos que não possuam atividades.
+#### 3. Apague todos os projetos que não possuam atividades.
 
 ```javascript
 var query = {$or: [{"goals.activities": {$exists: false}}, {"goals.activities": {$eq: []}}] }
@@ -1358,7 +1360,8 @@ WriteResult({
   "nRemoved": 2
 })
 ```
-4. Escolha 2 usuário e apague todos os projetos em que os 2 fazem parte.
+
+#### 4. Escolha 2 usuário e apague todos os projetos em que os 2 fazem parte.
 
 ```javascript
 var members_project = [
@@ -1374,7 +1377,7 @@ WriteResult({
 })
 ```
 
-5. Apague todos os projetos que possuam uma determinada *tag* em *goal*.
+#### 5. Apague todos os projetos que possuam uma determinada *tag* em *goal*.
 
 ```javascript
 var query = {"goals.tags": {$in: [/blad runner/i]}}
