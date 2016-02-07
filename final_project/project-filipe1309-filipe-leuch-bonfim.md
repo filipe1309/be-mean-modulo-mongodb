@@ -1,6 +1,6 @@
 # MongoDb - Projeto Final
 **Autor:** Filipe Leuch Bonfim
-**Data** Date.now() //em timestamp
+**Data** 1454879064765
 
 ## Para qual sistema você usaria o MogoDB (diferente desse)?
 Acredito que o MongoDB seja melhor aproveitado em sistemas que necessitam ser escaláveis, e que possuem uma modelagem com poucos relacionamentos.
