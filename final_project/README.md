@@ -2000,6 +2000,7 @@ mongod --replSet replica_set --port 27018 --dbpath /data/rs2
 mongod --replSet replica_set --port 27019 --dbpath /data/rs3
 
 // nt
+// Conexão na réplica primária para configurar e iniciar as outras réplicas
 mongo --port 27017
 rsconf = {
    _id: "replica_set",
@@ -2015,10 +2016,20 @@ rs.initiate(rsconf)
 rs.add("127.0.0.1:27018")
 rs.add("127.0.0.1:27019")
 
+rs.addArb("127.0.0.1:30000")
+
+// nt
+// Adicionando um árbitro
+sudo mkdir /data/arb
+mongod --port 30000 --dbpath /data/arb --replSet replica_set
+
+//rs.status()
+//rs.printReplicationInfo()
+
 // Sharding
 // nt
 // config server
-mkdir \data\configdb
+mkdir /data/configdb
 mongod --configsvr --port 27010
 /*
 rs.initiate( {
@@ -2049,6 +2060,7 @@ mongod --port 27013 --dbpath /data/shard2
 mongod --port 27014 --dbpath /data/shard3
 
 // nt
+// Adicionando os shards no router
 mongo --port 27011 --host localhost
 
 sh.addShard("localhost:27012")
@@ -2058,4 +2070,5 @@ sh.addShard("localhost:27014")
 sh.enableSharding("be-mean-modulo-mongodb-pf")
 
 sh.shardCollection("be-mean-modulo-mongodb-pf.activities", {"_id" : 1})
+
 ```
