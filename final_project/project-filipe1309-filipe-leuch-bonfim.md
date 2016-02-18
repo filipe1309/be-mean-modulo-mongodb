@@ -1,5 +1,5 @@
 # MongoDb - Projeto Final
-**Autor:** Filipe Leuch Bonfim
+**Autor:** Filipe Leuch Bonfim  
 **Data** 1454879064765
 
 ## Para qual sistema você usaria o MogoDB (diferente desse)?
@@ -1391,8 +1391,8 @@ WriteResult({
 
 ## Sharding
 
+#### Config Server
 ```
-// config server
 mkdir /data/configdb
 ```
 ```
@@ -1423,8 +1423,9 @@ mongod --configsvr --port 27010
 2016-02-17T22:49:05.012-0200 I NETWORK  [HostnameCanonicalizationWorker] Starting hostname canonicalization worker
 2016-02-17T22:49:05.161-0200 I NETWORK  [initandlisten] waiting for connections on port 27010
 ```
+
+#### Router
 ```
-// router
 mongos --configdb localhost:27010 --port 27011
 2016-02-17T23:02:27.948-0200 W SHARDING [main] Running a sharded cluster with fewer than 3 config servers should only be done for testing purposes and is not recommended for production.
 2016-02-17T23:02:27.977-0200 I SHARDING [mongosMain] MongoS version 3.2.1 starting: pid=9721 port=27011 64-bit host=neozork-pc (--help for usage)
@@ -1455,9 +1456,15 @@ mongos --configdb localhost:27010 --port 27011
 2016-02-17T23:02:29.830-0200 I SHARDING [Balancer] about to log metadata event into actionlog: { _id: "neozork-pc-2016-02-17T23:02:29.830-0200-56c518255a1e904c5f26b4f9", server: "neozork-pc", clientAddr: "", time: new Date(1455757349830), what: "balancer.round", ns: "", details: { executionTimeMillis: 149, errorOccured: false, candidateChunks: 0, chunksMoved: 0 } }
 2016-02-17T23:02:29.838-0200 I SHARDING [Balancer] distributed lock 'balancer/neozork-pc:27011:1455757348:1804289383' unlocked.
 ```
+
+#### Criação dos Shards
+
 ```
 mkdir /data/shard1 && mkdir /data/shard2 && mkdir /data/shard3
-// Shard 1
+```
+
+##### Shard 1
+```
 mongod --port 27012 --dbpath /data/shard1
 2016-02-17T23:03:59.307-0200 I CONTROL  [initandlisten] MongoDB starting : pid=9843 port=27012 dbpath=/data/shard1 64-bit host=neozork-pc
 2016-02-17T23:03:59.307-0200 I CONTROL  [initandlisten] db version v3.2.1
@@ -1479,8 +1486,9 @@ mongod --port 27012 --dbpath /data/shard1
 2016-02-17T23:03:59.678-0200 I NETWORK  [HostnameCanonicalizationWorker] Starting hostname canonicalization worker
 2016-02-17T23:03:59.830-0200 I NETWORK  [initandlisten] waiting for connections on port 27012
 ```
+
+##### Shard 2
 ```
-// Shard 2
 mongod --port 27013 --dbpath /data/shard2
 2016-02-17T23:04:55.123-0200 I CONTROL  [initandlisten] MongoDB starting : pid=9931 port=27013 dbpath=/data/shard2 64-bit host=neozork-pc
 2016-02-17T23:04:55.123-0200 I CONTROL  [initandlisten] db version v3.2.1
@@ -1502,8 +1510,9 @@ mongod --port 27013 --dbpath /data/shard2
 2016-02-17T23:04:55.491-0200 I NETWORK  [HostnameCanonicalizationWorker] Starting hostname canonicalization worker
 2016-02-17T23:04:55.646-0200 I NETWORK  [initandlisten] waiting for connections on port 27013
 ```
+
+##### Shard 3
 ```
-// Shard 3
 mongod --port 27014 --dbpath /data/shard3
 2016-02-17T23:05:42.027-0200 I CONTROL  [initandlisten] MongoDB starting : pid=10056 port=27014 dbpath=/data/shard3 64-bit host=neozork-pc
 2016-02-17T23:05:42.027-0200 I CONTROL  [initandlisten] db version v3.2.1
@@ -1525,8 +1534,9 @@ mongod --port 27014 --dbpath /data/shard3
 2016-02-17T23:05:42.452-0200 I NETWORK  [HostnameCanonicalizationWorker] Starting hostname canonicalization worker
 2016-02-17T23:05:42.585-0200 I NETWORK  [initandlisten] waiting for connections on port 27014
 ```
+
+#### Adicionando os shards no router
 ```
-// Adicionando os shards no router
 mongo --port 27011 --host localhost
 ```
 ```js
@@ -1561,14 +1571,14 @@ sh.shardCollection("be-mean-modulo-mongodb-pf.activities", {"_id" : 1})
 ```
 
 ## Réplica
-
+#### Criando diretório para as répicas
 ```  
-// Criando diretório para as répicas
 mkdir /data/rs1 && mkdir /data/rs2 && mkdir /data/rs3
 ```
+
+#### Inicializando as réplicas em suas respectivas portas
+##### Réplica 1  
 ```
-// Inicializando as réplicas em suas respectivas portas
-// réplica 1
 mongod --replSet replica_set --port 27017 --dbpath /data/rs1
 2016-02-17T22:33:13.477-0200 I CONTROL  [initandlisten] MongoDB starting : pid=7914 port=27017 dbpath=/data/rs1 64-bit host=neozork-pc
 2016-02-17T22:33:13.477-0200 I CONTROL  [initandlisten] db version v3.2.1
@@ -1592,8 +1602,9 @@ mongod --replSet replica_set --port 27017 --dbpath /data/rs1
 2016-02-17T22:33:14.046-0200 I NETWORK  [HostnameCanonicalizationWorker] Starting hostname canonicalization worker
 2016-02-17T22:33:14.190-0200 I NETWORK  [initandlisten] waiting for connections on port 27017
 ```
+
+##### Réplica 2
 ```
-// réplica 2
 mongod --replSet replica_set --port 27018 --dbpath /data/rs2
 2016-02-17T22:38:27.422-0200 I CONTROL  [initandlisten] MongoDB starting : pid=8361 port=27018 dbpath=/data/rs2 64-bit host=neozork-pc
 2016-02-17T22:38:27.422-0200 I CONTROL  [initandlisten] db version v3.2.1
@@ -1617,8 +1628,9 @@ mongod --replSet replica_set --port 27018 --dbpath /data/rs2
 2016-02-17T22:38:27.956-0200 I NETWORK  [HostnameCanonicalizationWorker] Starting hostname canonicalization worker
 2016-02-17T22:38:28.111-0200 I NETWORK  [initandlisten] waiting for connections on port 27018
 ```
+
+##### Réplica 3
 ```
-// réplica 3
 mongod --replSet replica_set --port 27019 --dbpath /data/rs3
 2016-02-17T22:38:59.686-0200 I CONTROL  [initandlisten] MongoDB starting : pid=8449 port=27019 dbpath=/data/rs3 64-bit host=neozork-pc
 2016-02-17T22:38:59.686-0200 I CONTROL  [initandlisten] db version v3.2.1
@@ -1642,8 +1654,9 @@ mongod --replSet replica_set --port 27019 --dbpath /data/rs3
 2016-02-17T22:39:00.166-0200 I NETWORK  [HostnameCanonicalizationWorker] Starting hostname canonicalization worker
 2016-02-17T22:39:00.288-0200 I NETWORK  [initandlisten] waiting for connections on port 27019
 ```
+
+#### Conexão na réplica primária para configurar e adicionar as outras réplicas
 ```
-// Conexão na réplica primária para configurar e adicionar as outras réplicas
 mongo --port 27017
 ```
 ```js
@@ -1670,15 +1683,18 @@ rs.add("127.0.0.1:27019")
 {
   "ok": 1
 }
+```
 
-// Adicionando o árbitro na réplica primária
+##### Adicionando o árbitro na réplica primária
+```js
 rs.addArb("127.0.0.1:30000")
 {
   "ok": 1
 }
 ```
+
+#### Adicionando um árbitro
 ```
-// Adicionando um árbitro
 mkdir /data/arb
 ```
 ```
