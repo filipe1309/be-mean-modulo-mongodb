@@ -2020,7 +2020,7 @@ rs.addArb("127.0.0.1:30000")
 
 // nt
 // Adicionando um árbitro
-sudo mkdir /data/arb
+mkdir /data/arb
 mongod --port 30000 --dbpath /data/arb --replSet replica_set
 
 //rs.status()
